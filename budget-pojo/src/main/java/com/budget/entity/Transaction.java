@@ -4,40 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serializable;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-/**
- * 菜品
- */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dish implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class Transaction {
+    //记录id
     private Long id;
 
-    //菜品名称
-    private String name;
-
-    //菜品分类id
+    //收支分类id
     private Long categoryId;
-
-    //菜品价格
-    private BigDecimal price;
-
-    //图片
-    private String image;
-
+    //成员id
+    private Long memberId;
+    //收支金额
+    private BigDecimal money;
     //描述信息
     private String description;
-
-    //0 停售 1 起售
-    private Integer status;
 
     private LocalDateTime createTime;
 
@@ -46,5 +31,4 @@ public class Dish implements Serializable {
     private Long createUser;
 
     private Long updateUser;
-
 }

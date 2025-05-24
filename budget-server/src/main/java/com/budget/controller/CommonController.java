@@ -1,4 +1,4 @@
-package com.budget.controller.admin;
+package com.budget.controller;
 
 import com.budget.constant.MessageConstant;
 import com.budget.result.Result;
