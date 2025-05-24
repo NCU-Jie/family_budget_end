@@ -17,6 +17,8 @@ public class Member implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long familyId;
+
     private Long id;
 
     private String username;
@@ -27,7 +29,6 @@ public class Member implements Serializable {
 
     private String sex;
 
-    private Integer status;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;

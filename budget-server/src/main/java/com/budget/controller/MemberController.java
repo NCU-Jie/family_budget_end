@@ -5,6 +5,7 @@ import com.budget.constant.JwtClaimsConstant;
 import com.budget.constant.PasswordConstant;
 import com.budget.constant.StatusConstant;
 import com.budget.context.BaseContext;
+import com.budget.dto.AddMemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/budget/member")
 @Slf4j
 @Api(tags="成员相关接口")
 public class MemberController {
@@ -46,9 +47,9 @@ public class MemberController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation("员工登录")
+    @ApiOperation("用户登录")
     public Result<MemberLoginVO> login(@RequestBody MemberLoginDTO memberLoginDTO) {
-        log.info("员工登录：{}", memberLoginDTO);
+        log.info("用户登录：{}", memberLoginDTO);
 
         Member member = memberService.login(memberLoginDTO);
 
@@ -78,6 +79,14 @@ public class MemberController {
     @PostMapping("/logout")
     @ApiOperation("员工退出")
     public Result<String> logout() {
+        return Result.success();
+    }
+
+    @PostMapping("/add")
+    @ApiOperation("添加家庭成员")
+    public Result<String> add(@RequestBody AddMemberDTO addMemberDTO) {
+        log.info("添加家庭成员{}", addMemberDTO);
+        memberService.addMember(addMemberDTO);
         return Result.success();
     }
 

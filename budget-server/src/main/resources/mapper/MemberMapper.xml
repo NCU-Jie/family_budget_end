@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.budget.mapper.MemberMapper">
+
+    <insert id="insert">
+        insert into member(id,name,username,password,sex,create_time,update_time,create_user,update_user,family_id)
+        values(#{id},#{name},#{username},#{password},#{sex},#{createTime},#{updateTime},#{createUser},#{updateUser},#{familyId})
+    </insert>
+</mapper>

@@ -12,8 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
+
+    private Long familyId;
     //记录id
     private Long id;
+    //收支id
+    private int typeId;
 
     //收支分类id
     private Long categoryId;

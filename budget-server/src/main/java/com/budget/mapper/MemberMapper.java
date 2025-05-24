@@ -1,11 +1,21 @@
 package com.budget.mapper;
 
+import com.budget.annotation.AutoFill;
 import com.budget.entity.Member;
+import com.budget.enumeration.OperationType;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface MemberMapper {
+
+    @Select("select family_id from member where id = #{id}")
+    Long getFamilyIdById(Long id) ;
+
     @Select("select * from member where username = #{username}")
     Member getByUsername(String username);
+
+    @AutoFill(OperationType.INSERT)
+    void insert(Member member);
 }

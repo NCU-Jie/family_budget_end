@@ -2,6 +2,8 @@ package com.budget.service.impl;
 
 import com.budget.constant.MessageConstant;
 import com.budget.constant.StatusConstant;
+import com.budget.context.BaseContext;
+import com.budget.dto.AddMemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 import com.budget.exception.AccountLockedException;
@@ -9,6 +11,7 @@ import com.budget.exception.AccountNotFoundException;
 import com.budget.exception.PasswordErrorException;
 import com.budget.mapper.MemberMapper;
 import com.budget.service.MemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -39,13 +42,19 @@ public class MemberServiceImpl implements MemberService {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
 
-        if (member.getStatus() == StatusConstant.DISABLE) {
-            //账号被锁定
-            throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
-        }
+
 
         //3、返回实体对象
         return member;
         
+    }
+
+    @Override
+    public void addMember(AddMemberDTO addMemberDTO) {
+        Member member = new Member();
+        BeanUtils.copyProperties(addMemberDTO, member);
+        Long familyId = memberMapper.getFamilyIdById(BaseContext.getCurrentId());
+        member.setFamilyId(familyId);
+        memberMapper.insert(member);
     }
 }
