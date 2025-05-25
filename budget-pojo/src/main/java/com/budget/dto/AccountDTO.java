@@ -2,13 +2,18 @@ package com.budget.dto;
 
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
-public class TransactionDTO {
+public class AccountDTO implements Serializable {
     //记录id
     private Long id;
+
+    private String name;
 
     //收支分类id
     private Long categoryId;
@@ -16,6 +21,9 @@ public class TransactionDTO {
     private Long memberId;
     //收支金额
     private BigDecimal money;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate recordDate;
     //描述信息
     private String description;
 

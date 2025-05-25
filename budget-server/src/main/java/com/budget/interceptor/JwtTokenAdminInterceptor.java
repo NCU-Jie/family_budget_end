@@ -2,6 +2,7 @@ package com.budget.interceptor;
 
 import com.budget.constant.JwtClaimsConstant;
 import com.budget.context.BaseContext;
+import com.budget.mapper.MemberMapper;
 import com.budget.properties.JwtProperties;
 import com.budget.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class JwtTokenAdminInterceptor implements HandlerInterceptor {
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -49,6 +52,9 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             Long memId = Long.valueOf(claims.get(JwtClaimsConstant.MEMBER_ID).toString());
             log.info("当前成员id：{}", memId);
             BaseContext.setCurrentId(memId);
+            Long familyId = memberMapper.getFamilyIdById(BaseContext.getCurrentId());
+            BaseContext.setFamilyId(familyId);
+            log.info("当前家庭id：{}", familyId);
             //3、通过，放行
             return true;
         } catch (Exception ex) {

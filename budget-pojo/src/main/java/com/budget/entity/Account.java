@@ -6,18 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction {
+public class Account {
 
     private Long familyId;
     //记录id
     private Long id;
     //收支id
     private int typeId;
+
+    private String name;
 
     //收支分类id
     private Long categoryId;
@@ -31,6 +34,8 @@ public class Transaction {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    private LocalDate recordDate;
 
     private Long createUser;
 

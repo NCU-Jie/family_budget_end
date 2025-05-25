@@ -7,4 +7,5 @@
         insert into member(id,name,username,password,sex,create_time,update_time,create_user,update_user,family_id)
         values(#{id},#{name},#{username},#{password},#{sex},#{createTime},#{updateTime},#{createUser},#{updateUser},#{familyId})
     </insert>
+
 </mapper>

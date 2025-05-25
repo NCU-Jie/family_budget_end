@@ -53,8 +53,7 @@ public class MemberServiceImpl implements MemberService {
     public void addMember(AddMemberDTO addMemberDTO) {
         Member member = new Member();
         BeanUtils.copyProperties(addMemberDTO, member);
-        Long familyId = memberMapper.getFamilyIdById(BaseContext.getCurrentId());
-        member.setFamilyId(familyId);
+        member.setFamilyId(BaseContext.getFamilyId());
         memberMapper.insert(member);
     }
 }

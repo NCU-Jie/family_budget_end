@@ -2,8 +2,10 @@ package com.budget.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class AddMemberDTO {
+public class AddMemberDTO implements Serializable {
 
     private Long id;
 
