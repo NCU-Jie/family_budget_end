@@ -3,9 +3,12 @@ package com.budget.mapper;
 import com.budget.annotation.AutoFill;
 import com.budget.entity.Member;
 import com.budget.enumeration.OperationType;
+import com.budget.vo.MemberVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface MemberMapper {
@@ -18,4 +21,10 @@ public interface MemberMapper {
 
     @AutoFill(OperationType.INSERT)
     void insert(Member member);
+
+    List<MemberVO> getMemberByFamilyId(Long familyId);
+
+    void deleteById(Long id);
+
+    void update(Member member);
 }

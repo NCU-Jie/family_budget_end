@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -23,4 +24,8 @@ public class AccountVO {
     private double money;
 
     private String description;
+
+    private String createMemberName;
+
+    private LocalDateTime  createTime;
 }

@@ -13,7 +13,7 @@ public class AccountDTO implements Serializable {
     //记录id
     private Long id;
 
-    private String name;
+    private String memberName;
 
     //收支分类id
     private Long categoryId;

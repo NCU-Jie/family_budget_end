@@ -2,8 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.budget.mapper.AccountMapper">
+    <update id="update">
+        update account
+        <set>
+            <if test="memberName != null">
+                name = #{name},
+            </if>
+
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+
+            <if test="memberId != null">
+                member_id = #{memberId},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
     <select id="pageQuery" resultType="com.budget.vo.AccountVO">
-        select * from account where family_id = #{familyId}
+        select
+            a.id,
+            a.category_id,
+            a.member_id,
+            a.money,
+            a.description,
+            a.create_time,
+            a.update_time,
+            a.create_user,
+            a.update_user,
+            a.type_id,
+            a.family_id,
+            a.member_name,
+            a.record_date,
+            member.name AS create_member_name
+            from account a
+                 join member on a.create_user = member.id
+                 where a.family_id = #{familyId}
     </select>
 
+    <select id="getAccountByCategoryId" resultType="com.budget.entity.Account">
+        select * from account
+        where category_id = #{categoryId} and family_id = #{familyId}
+    </select>
 </mapper>

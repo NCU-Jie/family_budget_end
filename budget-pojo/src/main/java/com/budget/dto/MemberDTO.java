@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class AddMemberDTO implements Serializable {
+public class MemberDTO implements Serializable {
 
     private Long id;
 

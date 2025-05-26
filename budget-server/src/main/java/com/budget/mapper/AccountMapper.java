@@ -6,8 +6,11 @@ import com.budget.entity.Account;
 import com.budget.enumeration.OperationType;
 import com.budget.vo.AccountVO;
 import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface AccountMapper {
@@ -16,4 +19,12 @@ public interface AccountMapper {
     void insert(Account account);
 
     Page<AccountVO> pageQuery(AccountPageQueryDTO accountPageQueryDTO);
+
+    List<Account> getAccountByCategoryId(Long categoryId, Long familyId);
+
+    @Delete("delete from account where id = #{id}")
+    void deleteById(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Account account);
 }

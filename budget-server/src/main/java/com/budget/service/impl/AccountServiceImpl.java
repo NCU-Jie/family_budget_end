@@ -15,6 +15,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
@@ -23,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountMapper accountMapper;
     @Override
-    public void addTransaction(AccountDTO accountDTO) {
+    public void addAccount(AccountDTO accountDTO) {
         Account account =new Account();
         BeanUtils.copyProperties(accountDTO, account);
         account.setFamilyId(BaseContext.getFamilyId());
@@ -35,5 +37,24 @@ public class AccountServiceImpl implements AccountService {
         PageHelper.startPage(accountPageQueryDTO.getPage(),  accountPageQueryDTO.getPageSize());
         Page<AccountVO> page = accountMapper.pageQuery(accountPageQueryDTO);
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public List<Account> getAccountByCategoryId(Long categoryId) {
+        Long familyId = BaseContext.getFamilyId();
+        List<Account> accountList = accountMapper.getAccountByCategoryId(categoryId,familyId);
+        return accountList;
+    }
+
+    @Override
+    public void delete(Long id) {
+        accountMapper.deleteById(id);
+    }
+
+    @Override
+    public void updateAccount(AccountDTO accountDTO) {
+        Account account =new Account();
+        BeanUtils.copyProperties(accountDTO, account);
+        accountMapper.update(account);
     }
 }

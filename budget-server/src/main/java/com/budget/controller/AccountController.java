@@ -3,6 +3,7 @@ package com.budget.controller;
 
 import com.budget.dto.AccountDTO;
 import com.budget.dto.AccountPageQueryDTO;
+import com.budget.entity.Account;
 import com.budget.result.PageResult;
 import com.budget.result.Result;
 import com.budget.service.AccountService;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("budget/account")
@@ -21,9 +24,9 @@ public class AccountController {
     private AccountService accountService;
     @PostMapping("/add")
     @ApiOperation("添加记录")
-    public Result addTransaction(@RequestBody AccountDTO accountDTO){
+    public Result addAccount(@RequestBody AccountDTO accountDTO){
         log.info("添加记录：{}", accountDTO);
-        accountService.addTransaction(accountDTO);
+        accountService.addAccount(accountDTO);
         log.info("添加记录成功");
         return Result.success();
     }
@@ -35,5 +38,30 @@ public class AccountController {
         PageResult pageResult = accountService.pageQuery(accountPageQueryDTO);
         return Result.success(pageResult);
     }
+
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询记录")
+    public Result<List<Account>> getAccountByCategoryId(Long categoryId){
+        log.info("根据分类id查询记录:{}",categoryId);
+        List<Account> accountList = accountService.getAccountByCategoryId(categoryId);
+        return Result.success(accountList);
+    }
+
+    @ApiOperation("根据记录id删除记录")
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable Long id){
+        log.info("根据记录id删除记录:{}",id);
+        accountService.delete(id);
+        return Result.success();
+    }
+
+    @ApiOperation("更新记录")
+    @PutMapping("/update")
+    public Result update(@RequestBody AccountDTO accountDTO){
+        log.info("更新记录:{}",accountDTO);
+        accountService.updateAccount(accountDTO);
+        return Result.success();
+    }
+
 
 }

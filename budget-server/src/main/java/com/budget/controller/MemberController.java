@@ -2,10 +2,8 @@ package com.budget.controller;
 
 import com.budget.constant.JwtClaimsConstant;
 
-import com.budget.constant.PasswordConstant;
-import com.budget.constant.StatusConstant;
 import com.budget.context.BaseContext;
-import com.budget.dto.AddMemberDTO;
+import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 
@@ -16,19 +14,15 @@ import com.budget.service.MemberService;
 import com.budget.utils.JwtUtil;
 
 import com.budget.vo.MemberLoginVO;
+import com.budget.vo.MemberVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -84,9 +78,34 @@ public class MemberController {
 
     @PostMapping("/add")
     @ApiOperation("添加家庭成员")
-    public Result<String> add(@RequestBody AddMemberDTO addMemberDTO) {
-        log.info("添加家庭成员{}", addMemberDTO);
-        memberService.addMember(addMemberDTO);
+    public Result<String> add(@RequestBody MemberDTO memberDTO) {
+        log.info("添加家庭成员{}", memberDTO);
+        memberService.addMember(memberDTO);
+        return Result.success();
+    }
+
+    @ApiOperation("根据家庭id查询家庭成员")
+    @GetMapping("/list")
+    public Result<List<MemberVO>> getMemberByFamilyId() {
+        Long familyId = BaseContext.getFamilyId();
+        log.info("根据家庭id查询家庭成员{}", familyId);
+        List<MemberVO> memberVOList = memberService.getMemberByFamilyId(familyId);
+        return Result.success(memberVOList);
+    }
+
+    @ApiOperation("根据id删除家庭成员")
+    @DeleteMapping("/delete/{id}")
+    public Result<String> delete(@PathVariable Long id) {
+        log.info("根据id删除家庭成员{}", id);
+        memberService.deleteMemberById(id);
+        return Result.success();
+    }
+
+    @ApiOperation("修改家庭成员")
+    @PutMapping("/update")
+    public Result<String> update(@RequestBody MemberDTO memberDTO) {
+        log.info("修改家庭成员{}", memberDTO);
+        memberService.updateMember(memberDTO);
         return Result.success();
     }
 
