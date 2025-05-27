@@ -27,4 +27,6 @@ public interface MemberMapper {
     void deleteById(Long id);
 
     void update(Member member);
+
+    Member getByName(String name);
 }

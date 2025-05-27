@@ -7,6 +7,7 @@ import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 
+import com.budget.exception.MemberAlreadyExistsException;
 import com.budget.properties.JwtProperties;
 import com.budget.result.Result;
 
@@ -79,9 +80,13 @@ public class MemberController {
     @PostMapping("/add")
     @ApiOperation("添加家庭成员")
     public Result<String> add(@RequestBody MemberDTO memberDTO) {
-        log.info("添加家庭成员{}", memberDTO);
-        memberService.addMember(memberDTO);
-        return Result.success();
+        try {
+            log.info("添加家庭成员{}", memberDTO);
+            memberService.addMember(memberDTO);
+            return Result.success();
+        } catch (MemberAlreadyExistsException e) {
+            return Result.error(e.getMessage());
+        }
     }
 
     @ApiOperation("根据家庭id查询家庭成员")

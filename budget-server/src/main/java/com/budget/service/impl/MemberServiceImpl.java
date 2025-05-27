@@ -6,6 +6,7 @@ import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 import com.budget.exception.AccountNotFoundException;
+import com.budget.exception.MemberAlreadyExistsException;
 import com.budget.exception.PasswordErrorException;
 import com.budget.mapper.MemberMapper;
 import com.budget.service.MemberService;
@@ -52,8 +53,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void addMember(MemberDTO memberDTO) {
-        if (memberDTO.getUsername() ==null) {
-
+        String name = memberDTO.getName();
+        Member existingMember = memberMapper.getByName(name);
+        if (existingMember != null) {
+            throw new MemberAlreadyExistsException("用户 " + name + " 已存在");
         }
         Member member = new Member();
         BeanUtils.copyProperties(memberDTO, member);

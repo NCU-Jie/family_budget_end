@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.budget.mapper.CategoryMapper">
+
+    <insert id="insert">
+        insert into category(id,name,type_id,family_id) values(#{id},#{name},#{typeId},#{familyId})
+    </insert>
+
+    <update id="update">
+        update category
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        delete from category where id = #{id}
+    </delete>
+
+    <select id="pageQuery" resultType="com.budget.vo.CategoryVO">
+        select * from category
+        <where>
+            <if test="familyId != null">
+                family_id = #{familyId}
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="getByNameAndTypeId" resultType="com.budget.vo.CategoryVO">
+        select * from category where name = #{name} and type_id = #{typeId}
+    </select>
+
+</mapper>

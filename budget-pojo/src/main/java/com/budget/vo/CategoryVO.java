@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberVO {
+public class CategoryVO {
     private Long id;
     private String name;
-    private String sex;
+    private int typeId;
+    private Long familyId;
 }
