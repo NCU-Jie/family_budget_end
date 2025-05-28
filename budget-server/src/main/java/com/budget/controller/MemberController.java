@@ -51,6 +51,7 @@ public class MemberController {
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.MEMBER_ID, member.getId());
+        claims.put(JwtClaimsConstant.FAMILY_ID, member.getFamilyId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getSecretKey(),
                 jwtProperties.getTtl(),
@@ -112,6 +113,13 @@ public class MemberController {
         log.info("修改家庭成员{}", memberDTO);
         memberService.updateMember(memberDTO);
         return Result.success();
+    }
+    @ApiOperation("根据id查询用户")
+    @GetMapping("/{id}")
+    public Result<Member> getById(@PathVariable Long id) {
+        log.info("根据id查询用户{}", id);
+        Member member = memberService.getById(id);
+        return Result.success(member);
     }
 
 }

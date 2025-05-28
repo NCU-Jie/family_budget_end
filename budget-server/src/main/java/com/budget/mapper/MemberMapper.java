@@ -13,8 +13,8 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
 
-    @Select("select family_id from member where id = #{id}")
-    Long getFamilyIdById(Long id) ;
+    @Select("select * from member where id = #{id}")
+    Member getById(Long id) ;
 
     @Select("select * from member where username = #{username}")
     Member getByUsername(String username);

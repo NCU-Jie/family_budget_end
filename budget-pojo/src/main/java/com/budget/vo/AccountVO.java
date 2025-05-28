@@ -17,7 +17,7 @@ public class AccountVO {
 
     private String  name;
 
-    private int typeId;
+    private Long typeId;
 
     private Long categoryId;
 

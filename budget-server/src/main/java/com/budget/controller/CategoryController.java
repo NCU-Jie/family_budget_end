@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @ApiOperation("根据id删除分类")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public Result delete(@PathVariable Long id){
         log.info("根据id删除分类：{}", id);
         categoryService.delete(id);
@@ -48,7 +48,7 @@ public class CategoryController {
     }
 
     @ApiOperation("修改分类")
-    @PutMapping("/update")
+    @PutMapping()
     public Result update(@RequestBody CategoryDTO categoryDTO){
         log.info("修改分类：{}", categoryDTO);
         categoryService.updateCategory(categoryDTO);

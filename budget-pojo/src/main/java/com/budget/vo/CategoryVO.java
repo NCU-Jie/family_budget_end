@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class CategoryVO {
     private Long id;
     private String name;
-    private int typeId;
+    private Long typeId;
     private Long familyId;
 }

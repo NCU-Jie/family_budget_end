@@ -1,13 +1,13 @@
 package com.budget.service.impl;
 
+import com.budget.constant.AdminConstant;
 import com.budget.constant.MessageConstant;
+
 import com.budget.context.BaseContext;
 import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
-import com.budget.exception.AccountNotFoundException;
-import com.budget.exception.MemberAlreadyExistsException;
-import com.budget.exception.PasswordErrorException;
+import com.budget.exception.*;
 import com.budget.mapper.MemberMapper;
 import com.budget.service.MemberService;
 import com.budget.vo.MemberVO;
@@ -60,6 +60,17 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = new Member();
         BeanUtils.copyProperties(memberDTO, member);
+        //判断是否创建账号
+        String username = member.getUsername();
+        if (username != null) {
+            existingMember = memberMapper.getByUsername(username);
+            if(existingMember!=null) {
+                throw new UsernameAlreadyExistException(MessageConstant.USERNAME_ALREADY_EXIST);
+            }
+            String password = member.getPassword();
+            String md5Password=DigestUtils.md5DigestAsHex(password.getBytes());
+            member.setPassword(md5Password);
+        }
         member.setFamilyId(BaseContext.getFamilyId());
         memberMapper.insert(member);
     }
@@ -71,13 +82,27 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMemberById(Long id) {
+        if(id.equals(AdminConstant.ADMIN_ID)){
+            throw  new AdminException(MessageConstant.ADMIN_DELETE_NOT_ALLOWED);
+        }
         memberMapper.deleteById(id);
     }
 
     @Override
     public void updateMember(MemberDTO memberDTO) {
+        if(memberDTO.getId().equals(AdminConstant.ADMIN_ID) ){
+            throw  new AdminException(MessageConstant.ADMIN_UPDATE_NOT_ALLOWED);
+        }
         Member member = new Member();
         BeanUtils.copyProperties(memberDTO, member);
+
         memberMapper.update(member);
+    }
+
+    @Override
+    public Member getById(Long id) {
+        Member member = memberMapper.getById(id);
+        member.setPassword(null);
+        return member;
     }
 }

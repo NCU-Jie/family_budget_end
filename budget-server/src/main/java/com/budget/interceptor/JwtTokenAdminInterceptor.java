@@ -52,7 +52,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             Long memId = Long.valueOf(claims.get(JwtClaimsConstant.MEMBER_ID).toString());
             log.info("当前成员id：{}", memId);
             BaseContext.setCurrentId(memId);
-            Long familyId = memberMapper.getFamilyIdById(BaseContext.getCurrentId());
+            Long familyId =Long.valueOf(claims.get(JwtClaimsConstant.FAMILY_ID).toString());
             BaseContext.setFamilyId(familyId);
             log.info("当前家庭id：{}", familyId);
             //3、通过，放行

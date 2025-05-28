@@ -9,6 +9,7 @@
     </insert>
 
     <update id="update">
+        update member
         <set>
             <if test="name != null">
                 name = #{name},
@@ -19,8 +20,14 @@
             <if test="username != null">
                 username = #{username},
             </if>
+            <if test="username == null">
+                username =null,
+            </if>
             <if test="password != null">
                 password = #{password},
+            </if>
+            <if test="password == null">
+                password = null,
             </if>
         </set>
         where id = #{id}
