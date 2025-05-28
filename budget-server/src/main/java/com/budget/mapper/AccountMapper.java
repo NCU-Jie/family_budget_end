@@ -2,9 +2,11 @@ package com.budget.mapper;
 
 import com.budget.annotation.AutoFill;
 import com.budget.dto.AccountPageQueryDTO;
+import com.budget.dto.StatisticQueryDTO;
 import com.budget.entity.Account;
 import com.budget.enumeration.OperationType;
 import com.budget.vo.AccountVO;
+import com.budget.vo.StatisticVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,4 +29,6 @@ public interface AccountMapper {
 
     @AutoFill(OperationType.UPDATE)
     void update(Account account);
+
+    List<StatisticVO> summary(StatisticQueryDTO statisticQueryDTO);
 }

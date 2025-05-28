@@ -13,4 +13,8 @@ public class AccountPageQueryDTO implements Serializable {
     private Long familyId;
 
     private Long categoryId;
+
+    private Long typeId;
+
+    private String name;
 }

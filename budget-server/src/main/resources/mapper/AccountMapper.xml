@@ -48,11 +48,42 @@
             member.name AS create_member_name
             from account a
                  join member on a.create_user = member.id
-                 where a.family_id = #{familyId}
+                 <where>
+                <if test="categoryId != null">
+                    and a.category_id = #{categoryId}
+                </if>
+                <if test="familyId != null">
+                    and a.family_id = #{familyId}
+                </if>
+                <if test="typeId != null">
+                    and a.type_id = #{typeId}
+                </if>
+                <if test="name != null">
+                    and a.member_name = #{name}
+                </if>
+            </where>
     </select>
 
     <select id="getAccountByCategoryId" resultType="com.budget.entity.Account">
         select * from account
         where category_id = #{categoryId} and family_id = #{familyId}
+    </select>
+
+    <select id="summary" resultType="com.budget.vo.StatisticVO">
+        SELECT
+            CASE
+                WHEN #{groupType} = 'year' THEN DATE_FORMAT(record_date, '%Y')
+                WHEN #{groupType} = 'month' THEN DATE_FORMAT(record_date, '%Y-%m')
+                WHEN #{groupType} = 'week' THEN CONCAT(YEAR(record_date), '-W', WEEK(record_date, 1))
+                WHEN #{groupType} = 'day' THEN DATE_FORMAT(record_date, '%Y-%m-%d')
+                END AS time,
+
+        SUM(CASE WHEN type_id = 0 THEN money ELSE 0 END) AS income,
+        SUM(CASE WHEN type_id = 1 THEN money ELSE 0 END) AS expense
+
+        FROM account
+        WHERE record_date BETWEEN #{startTime} AND #{endTime} And family_id = #{familyId}
+        GROUP BY time
+        ORDER BY time ASC
     </select>
 </mapper>

@@ -3,10 +3,11 @@ package com.budget.controller;
 
 import com.budget.dto.AccountDTO;
 import com.budget.dto.AccountPageQueryDTO;
-import com.budget.entity.Account;
+import com.budget.dto.StatisticQueryDTO;
 import com.budget.result.PageResult;
 import com.budget.result.Result;
 import com.budget.service.AccountService;
+import com.budget.vo.StatisticVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +40,7 @@ public class AccountController {
         return Result.success(pageResult);
     }
 
-    @GetMapping("/list")
-    @ApiOperation("根据分类id查询记录")
-    public Result<List<Account>> getAccountByCategoryId(Long categoryId){
-        log.info("根据分类id查询记录:{}",categoryId);
-        List<Account> accountList = accountService.getAccountByCategoryId(categoryId);
-        return Result.success(accountList);
-    }
+
 
     @ApiOperation("根据记录id删除记录")
     @DeleteMapping("/delete/{id}")
@@ -63,5 +58,11 @@ public class AccountController {
         return Result.success();
     }
 
-
+    @ApiOperation("账单汇总统计")
+    @GetMapping("/summary")
+    public Result<List<StatisticVO>> summary(StatisticQueryDTO statisticQueryDTO){
+        log.info("账单汇总统计:{}",statisticQueryDTO);
+        List<StatisticVO> statisticQueryVOList = accountService.summary(statisticQueryDTO);
+        return Result.success(statisticQueryVOList);
+    }
 }
