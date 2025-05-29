@@ -6,11 +6,14 @@ import com.budget.exception.CategoryAlreadyExistsException;
 import com.budget.result.PageResult;
 import com.budget.result.Result;
 import com.budget.service.CategoryService;
+import com.budget.vo.CategoryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("budget/category")
@@ -54,4 +57,14 @@ public class CategoryController {
         categoryService.updateCategory(categoryDTO);
         return Result.success();
     }
+
+    @ApiOperation("根据字符串查找分类")
+    @PostMapping("/findByName")
+    public Result<List<CategoryVO>> findByName(@RequestBody CategoryDTO categoryDTO){
+        log.info("根据字符串查找分类：{}", categoryDTO);
+        List<CategoryVO> categoryVOList= categoryService.findByName(categoryDTO);
+        return Result.success(categoryVOList);
+    }
+
+
 }

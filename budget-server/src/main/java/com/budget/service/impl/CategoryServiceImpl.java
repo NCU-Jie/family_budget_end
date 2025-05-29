@@ -16,6 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -58,5 +60,11 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
         categoryMapper.update(category);
+    }
+
+    @Override
+    public List<CategoryVO> findByName(CategoryDTO categoryDTO) {
+        categoryDTO.setFamilyId(BaseContext.getFamilyId());
+        return categoryMapper.findByName(categoryDTO);
     }
 }
