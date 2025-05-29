@@ -37,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public PageResult pageQuery(AccountPageQueryDTO accountPageQueryDTO) {
         PageHelper.startPage(accountPageQueryDTO.getPage(),  accountPageQueryDTO.getPageSize());
+
         accountPageQueryDTO.setFamilyId(BaseContext.getFamilyId());
         Page<AccountVO> page = accountMapper.pageQuery(accountPageQueryDTO);
         return new PageResult(page.getTotal(),page.getResult());

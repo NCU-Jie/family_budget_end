@@ -82,8 +82,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMemberById(Long id) {
+        //不能删除管理员
         if(id.equals(AdminConstant.ADMIN_ID)){
             throw  new AdminException(MessageConstant.ADMIN_DELETE_NOT_ALLOWED);
+        }
+        //用户不能删除自己
+        if(id.equals(BaseContext.getCurrentId())){
+            throw  new MemberException(MessageConstant.MEMBER_DELETE_NOT_ALLOWED);
         }
         memberMapper.deleteById(id);
     }
@@ -95,7 +100,11 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = new Member();
         BeanUtils.copyProperties(memberDTO, member);
-
+        String password = member.getPassword();
+        if(password !=null){
+            String md5Password=DigestUtils.md5DigestAsHex(password.getBytes());
+            member.setPassword(md5Password);
+        }
         memberMapper.update(member);
     }
 

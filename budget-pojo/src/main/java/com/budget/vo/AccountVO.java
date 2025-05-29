@@ -13,19 +13,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountVO {
-    private LocalDate recordDate;
-
-    private String  name;
+    private Long id;
+    private LocalDate accountDate;
+    private Long memberId;
+    private String  memberName;
 
     private Long typeId;
 
     private Long categoryId;
+    private String categoryName;
 
     private double money;
 
     private String description;
 
-    private String createMemberName;
+    private String recordMemberName;
 
     private LocalDateTime  createTime;
 }

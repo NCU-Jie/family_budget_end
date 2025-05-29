@@ -27,4 +27,5 @@ public class MessageConstant {
     public static final String ADMIN_DELETE_NOT_ALLOWED = "不能删除管理员账号";
     public static final String ADMIN_UPDATE_NOT_ALLOWED = "不能修改管理员账号";
     public static final String USERNAME_ALREADY_EXIST = "账号已存在";
+    public static final String MEMBER_DELETE_NOT_ALLOWED = "不能删除自己";
 }

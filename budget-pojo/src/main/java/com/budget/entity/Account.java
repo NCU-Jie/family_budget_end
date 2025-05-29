@@ -20,7 +20,7 @@ public class Account {
     //收支id
     private int typeId;
 
-    private String name;
+    private String MemberName;
 
     //收支分类id
     private Long categoryId;
