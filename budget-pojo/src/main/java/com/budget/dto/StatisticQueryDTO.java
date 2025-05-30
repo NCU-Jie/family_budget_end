@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 public class StatisticQueryDTO {
     private Long familyId;
+    private String memberName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

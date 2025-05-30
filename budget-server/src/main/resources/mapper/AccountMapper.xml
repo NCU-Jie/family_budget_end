@@ -81,7 +81,14 @@
         SUM(CASE WHEN type_id = 1 THEN money ELSE 0 END) AS expense
 
         FROM account
-        WHERE record_date BETWEEN #{startTime} AND #{endTime} And family_id = #{familyId}
+        <where>
+            record_date BETWEEN #{startTime} AND #{endTime}
+            AND family_id = #{familyId}
+
+            <if test="memberName != null">
+                AND member_name = #{memberName}
+            </if>
+        </where>
         GROUP BY time
         ORDER BY time ASC
     </select>
