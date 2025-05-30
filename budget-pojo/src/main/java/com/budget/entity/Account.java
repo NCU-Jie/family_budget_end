@@ -18,7 +18,7 @@ public class Account {
     //记录id
     private Long id;
     //收支id
-    private int typeId;
+    private Long typeId;
 
     private String MemberName;
 
@@ -35,7 +35,7 @@ public class Account {
 
     private LocalDateTime updateTime;
 
-    private LocalDate recordDate;
+    private LocalDate accountDate;
 
     private Long createUser;
 

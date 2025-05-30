@@ -13,5 +13,4 @@ public class CategoryVO {
     private Long id;
     private String name;
     private Long typeId;
-    private Long familyId;
 }

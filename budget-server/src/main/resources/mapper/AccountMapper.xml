@@ -32,35 +32,44 @@
     </update>
     <select id="pageQuery" resultType="com.budget.vo.AccountVO">
         select
-            a.id,
-            a.category_id,
-            category.name AS category_name,
-            a.member_id,
-            a.money,
-            a.description,
-            a.create_time,
-            a.create_user,
-            category.type_id AS type_id,
-            a.member_name,
-            a.account_date,
-            member.name AS record_member_name
-            from account a
-                 join member on a.create_user = member.id
-                join category on a.category_id = category.id
-                 <where>
-                <if test="categoryId != null">
-                    and a.category_id = #{categoryId}
-                </if>
-                <if test="familyId != null">
-                    and a.family_id = #{familyId}
-                </if>
-                <if test="typeId != null">
-                    and a.type_id = #{typeId}
-                </if>
-                <if test="name != null">
-                    and a.member_name = #{memberName}
-                </if>
-            </where>
+        a.id,
+        a.category_id,
+        category.name AS category_name,
+        a.member_id,
+        a.money,
+        a.description,
+        a.create_time,
+        a.create_user,
+        category.type_id AS type_id,
+        a.member_name,
+        a.account_date,
+        member.name AS record_member_name
+        from account a
+        join member on a.create_user = member.id
+        join category on a.category_id = category.id
+        <where>
+            <if test="categoryId != null">
+                and a.category_id = #{categoryId}
+            </if>
+            <if test="familyId != null">
+                and a.family_id = #{familyId}
+            </if>
+            <if test="typeId != null">
+                and category.type_id = #{typeId}
+            </if>
+            <if test="memberId != null">
+                and a.member_id = #{memberId}
+            </if>
+            <if test="description != null">
+                and a.description like concat('%', #{description}, '%')
+            </if>
+            <if test="beginDate != null">
+                and  account_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null">
+                and account_date &lt;= #{endDate}
+            </if>
+        </where>
     </select>
 
     <select id="getAccountByCategoryId" resultType="com.budget.entity.Account">
@@ -71,10 +80,10 @@
     <select id="summary" resultType="com.budget.vo.StatisticVO">
         SELECT
             CASE
-                WHEN #{groupType} = 'year' THEN DATE_FORMAT(record_date, '%Y')
-                WHEN #{groupType} = 'month' THEN DATE_FORMAT(record_date, '%Y-%m')
-                WHEN #{groupType} = 'week' THEN CONCAT(YEAR(record_date), '-W', WEEK(record_date, 1))
-                WHEN #{groupType} = 'day' THEN DATE_FORMAT(record_date, '%Y-%m-%d')
+                WHEN #{groupType} = 'year' THEN DATE_FORMAT(account_date, '%Y')
+                WHEN #{groupType} = 'month' THEN DATE_FORMAT(account_date, '%Y-%m')
+                WHEN #{groupType} = 'week' THEN CONCAT(YEAR(account_date), '-W', WEEK(account_date, 1))
+                WHEN #{groupType} = 'day' THEN DATE_FORMAT(account_date, '%Y-%m-%d')
                 END AS time,
 
         SUM(CASE WHEN type_id = 0 THEN money ELSE 0 END) AS income,
@@ -82,7 +91,7 @@
 
         FROM account
         <where>
-            record_date BETWEEN #{startTime} AND #{endTime}
+            account_date BETWEEN #{startTime} AND #{endTime}
             AND family_id = #{familyId}
 
             <if test="memberName != null">

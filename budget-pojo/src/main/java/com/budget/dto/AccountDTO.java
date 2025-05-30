@@ -14,7 +14,8 @@ public class AccountDTO implements Serializable {
     private Long id;
 
     private String memberName;
-
+    //收支类型id
+    private Long typeId;
     //收支分类id
     private Long categoryId;
     //成员id
@@ -23,7 +24,7 @@ public class AccountDTO implements Serializable {
     private BigDecimal money;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate recordDate;
+    private LocalDate accountDate;
     //描述信息
     private String description;
 

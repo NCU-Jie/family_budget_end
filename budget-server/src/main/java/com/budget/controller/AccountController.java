@@ -23,7 +23,7 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-    @PostMapping("/add")
+    @PostMapping()
     @ApiOperation("添加记录")
     public Result addAccount(@RequestBody AccountDTO accountDTO){
         log.info("添加记录：{}", accountDTO);
