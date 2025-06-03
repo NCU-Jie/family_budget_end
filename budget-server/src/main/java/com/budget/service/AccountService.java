@@ -5,6 +5,7 @@ import com.budget.dto.AccountPageQueryDTO;
 import com.budget.dto.StatisticQueryDTO;
 import com.budget.entity.Account;
 import com.budget.result.PageResult;
+import com.budget.vo.AccountVO;
 import com.budget.vo.StatisticVO;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface AccountService {
 
     void updateAccount(AccountDTO accountDTO);
 
-    List<StatisticVO> summary(StatisticQueryDTO statisticQueryDTO);
+
+    AccountVO getById(Long id);
+
 }

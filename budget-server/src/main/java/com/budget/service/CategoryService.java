@@ -18,4 +18,6 @@ public interface CategoryService {
     void updateCategory(CategoryDTO categoryDTO);
 
     List<CategoryVO> findByName(CategoryDTO categoryDTO);
+
+    List<CategoryVO> list(Long typeId);
 }

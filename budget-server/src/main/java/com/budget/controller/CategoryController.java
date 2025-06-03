@@ -33,6 +33,13 @@ public class CategoryController {
             return Result.error(e.getMessage());
         }
     }
+    @ApiOperation( "根据typeId查询分类")
+    @GetMapping("/list")
+    public Result<List<CategoryVO>> list( @RequestParam(required = false) Long typeId){
+        log.info("根据typeId{}查询所有分类", typeId);
+        List<CategoryVO> categoryVOList = categoryService.list(typeId);
+        return Result.success(categoryVOList);
+    }
 
     @ApiOperation("分页查询分类")
     @GetMapping("/pageQuery")

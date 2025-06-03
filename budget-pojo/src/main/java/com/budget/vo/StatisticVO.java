@@ -12,7 +12,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StatisticVO {
-    private String time;
+    private String groupName;
+    private String groupDisplayName;
     private BigDecimal income;
     private BigDecimal expense;
+    private Long groupCount;
 }

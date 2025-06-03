@@ -35,6 +35,9 @@
             <if test="typeId != null">
                 and type_id = #{typeId}
             </if>
+            <if test="keyword != null">
+                and name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
         </where>
     </select>
 
@@ -48,6 +51,17 @@
             <if test="name != null">
                 and name LIKE CONCAT('%', #{name}, '%')
             </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="familyId != null">
+                and family_id = #{familyId}
+            </if>
+        </where>
+    </select>
+    <select id="list" resultType="com.budget.vo.CategoryVO">
+        select * from category
+        <where>
             <if test="typeId != null">
                 and type_id = #{typeId}
             </if>

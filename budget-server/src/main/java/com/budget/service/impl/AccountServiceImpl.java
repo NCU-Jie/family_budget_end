@@ -63,8 +63,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<StatisticVO> summary(StatisticQueryDTO statisticQueryDTO) {
-        statisticQueryDTO.setFamilyId(BaseContext.getFamilyId());
-        return accountMapper.summary(statisticQueryDTO);
+    public AccountVO getById(Long id) {
+        return accountMapper.getById(id);
     }
 }

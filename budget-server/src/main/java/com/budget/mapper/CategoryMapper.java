@@ -9,6 +9,7 @@ import com.budget.enumeration.OperationType;
 import com.budget.vo.CategoryVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface CategoryMapper {
     void update(Category category);
 
     List<CategoryVO> findByName(CategoryDTO categoryDTO);
+
+    List<CategoryVO> list(Long typeId, Long familyId);
 }

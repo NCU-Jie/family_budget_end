@@ -7,6 +7,7 @@ import com.budget.dto.StatisticQueryDTO;
 import com.budget.result.PageResult;
 import com.budget.result.Result;
 import com.budget.service.AccountService;
+import com.budget.vo.AccountVO;
 import com.budget.vo.StatisticVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,26 +44,26 @@ public class AccountController {
 
 
     @ApiOperation("根据记录id删除记录")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public Result delete(@PathVariable Long id){
         log.info("根据记录id删除记录:{}",id);
         accountService.delete(id);
         return Result.success();
     }
+    @ApiOperation("根据id查询记录")
+    @GetMapping("/{id}")
+     public Result<AccountVO> getById(@PathVariable Long id){
+        log.info("根据id查询记录:{}",id);
+        AccountVO accountVO = accountService.getById(id);
+        return Result.success(accountVO);
+    }
 
     @ApiOperation("更新记录")
-    @PutMapping("/update")
+    @PutMapping()
     public Result update(@RequestBody AccountDTO accountDTO){
         log.info("更新记录:{}",accountDTO);
         accountService.updateAccount(accountDTO);
         return Result.success();
     }
 
-    @ApiOperation("账单汇总统计")
-    @GetMapping("/summary")
-    public Result<List<StatisticVO>> summary(StatisticQueryDTO statisticQueryDTO){
-        log.info("账单汇总统计:{}",statisticQueryDTO);
-        List<StatisticVO> statisticQueryVOList = accountService.summary(statisticQueryDTO);
-        return Result.success(statisticQueryVOList);
-    }
 }

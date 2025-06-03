@@ -67,4 +67,9 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDTO.setFamilyId(BaseContext.getFamilyId());
         return categoryMapper.findByName(categoryDTO);
     }
+
+    @Override
+    public List<CategoryVO> list(Long typeId) {
+        return categoryMapper.list(typeId, BaseContext.getFamilyId());
+    }
 }

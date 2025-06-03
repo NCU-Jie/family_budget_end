@@ -6,7 +6,7 @@
         update account
         <set>
             <if test="memberName != null">
-                name = #{name},
+                member_name = #{memberName},
             </if>
 
             <if test="categoryId != null">
@@ -24,6 +24,9 @@
             </if>
             <if test="typeId != null">
                 type_id = #{typeId},
+            </if>
+            <if test="accountDate!=null">
+                account_date = #{accountDate},
             </if>
         </set>
         <where>
@@ -70,6 +73,7 @@
                 and account_date &lt;= #{endDate}
             </if>
         </where>
+         order by a.account_date desc
     </select>
 
     <select id="getAccountByCategoryId" resultType="com.budget.entity.Account">
@@ -79,26 +83,53 @@
 
     <select id="summary" resultType="com.budget.vo.StatisticVO">
         SELECT
-            CASE
-                WHEN #{groupType} = 'year' THEN DATE_FORMAT(account_date, '%Y')
-                WHEN #{groupType} = 'month' THEN DATE_FORMAT(account_date, '%Y-%m')
-                WHEN #{groupType} = 'week' THEN CONCAT(YEAR(account_date), '-W', WEEK(account_date, 1))
-                WHEN #{groupType} = 'day' THEN DATE_FORMAT(account_date, '%Y-%m-%d')
-                END AS time,
+        CASE
+        WHEN #{groupType} = 'year' THEN DATE_FORMAT(account_date, '%Y')
+        WHEN #{groupType} = 'month' THEN DATE_FORMAT(account_date, '%Y-%m')
+        WHEN #{groupType} = 'week' THEN CONCAT(YEAR(account_date), '-W', WEEK(account_date, 1))
+        WHEN #{groupType} = 'day' THEN DATE_FORMAT(account_date, '%Y-%m-%d')
+        WHEN #{groupType} = 'member' THEN member_id
+        WHEN #{groupType} = 'category' THEN category_id
+        END AS group_name,
+        <if test="groupType == 'member'">
+            MAX((SELECT m.name FROM member m WHERE m.id = account.member_id)) AS group_display_name,
+        </if>
+        <if test="groupType == 'category'">
+            MAX((SELECT c.name FROM category c WHERE c.id = account.category_id)) AS group_display_name,
+        </if>
 
         SUM(CASE WHEN type_id = 0 THEN money ELSE 0 END) AS income,
-        SUM(CASE WHEN type_id = 1 THEN money ELSE 0 END) AS expense
-
+        SUM(CASE WHEN type_id = 1 THEN money ELSE 0 END) AS expense,
+        count(id) AS groupCount
         FROM account
+        <if test="groupType == 'category'">
+            LEFT JOIN category c ON account.category_id = c.id
+        </if>
         <where>
-            account_date BETWEEN #{startTime} AND #{endTime}
-            AND family_id = #{familyId}
+            <if test="typeId!=null">
+                and type_id = #{typeId}
+            </if>
+            <if test="beginDate != null">
+                AND account_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND account_date &lt;= #{endDate}
+            </if>
+            <if test="familyId != null">
+                AND family_id = #{familyId}
+            </if>
 
-            <if test="memberName != null">
-                AND member_name = #{memberName}
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="memberIds != null and memberIds.size() > 0">
+                AND member_id IN
+                <foreach collection="memberIds" item="memberId" open="(" separator="," close=")">
+                    #{memberId}
+                </foreach>
             </if>
         </where>
-        GROUP BY time
-        ORDER BY time ASC
+        GROUP BY group_name
+        ORDER BY group_name ASC
     </select>
 </mapper>

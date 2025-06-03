@@ -30,5 +30,8 @@ public interface AccountMapper {
     @AutoFill(OperationType.UPDATE)
     void update(Account account);
 
+
+    @Select("select a.*,c.name as categoryName from account a join category c on a.category_id= c.id where a.id = #{id}")
+    AccountVO getById(Long id);
     List<StatisticVO> summary(StatisticQueryDTO statisticQueryDTO);
 }

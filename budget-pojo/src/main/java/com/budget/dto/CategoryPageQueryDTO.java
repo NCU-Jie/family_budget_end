@@ -11,4 +11,5 @@ public class CategoryPageQueryDTO {
     private Long familyId;
 
     private Long typeId;
+    private String keyword;
 }

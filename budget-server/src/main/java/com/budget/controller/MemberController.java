@@ -51,6 +51,8 @@ public class MemberController {
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.MEMBER_ID, member.getId());
+        claims.put(JwtClaimsConstant.USERNAME, member.getUsername());
+        claims.put(JwtClaimsConstant.NAME, member.getName());
         claims.put(JwtClaimsConstant.FAMILY_ID, member.getFamilyId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getSecretKey(),
