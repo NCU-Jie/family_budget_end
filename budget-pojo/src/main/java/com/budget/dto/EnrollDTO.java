@@ -1,6 +1,7 @@
 package com.budget.dto;
 
-import jdk.jfr.DataAmount;
+
+import lombok.Data;
 
 @Data
 public class EnrollDTO {

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatisticCategoryVo {
+public class StatisticCategoryVO {
     private String categoryId;
     private String categoryName;
     private BigDecimal income;

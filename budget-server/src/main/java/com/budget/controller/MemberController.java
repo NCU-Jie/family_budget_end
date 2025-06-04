@@ -36,20 +36,25 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     private JwtProperties jwtProperties;
+
+    @PostMapping("/enroll")
+    @ApiOperation("用户注册")
+    public Result<String> enroll(@RequestBody EnrollDTO enrollDTO) {
+        try {
+            log.info("用户注册{}", enrollDTO);
+            memberService.enroll(enrollDTO);
+            return Result.success();
+        } catch (MemberAlreadyExistsException e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
     /**
      * 登录
      *
      * @param memberLoginDTO
      * @return
      */
-
-    @PostMapping("/enroll")
-    @ApiOperation("用户注册")
-    public Result<String> enroll(@RequestBody EnrollDTO enrollDTO) {
-        log.info("用户注册{}", enrollDTO);
-        memberService.enroll(enrollDTO);
-        return Result.success();
-    }
 
     @PostMapping("/login")
     @ApiOperation("用户登录")
