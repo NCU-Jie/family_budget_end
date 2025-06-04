@@ -28,6 +28,13 @@ public class StatisticController {
         List<StatisticVO> statisticQueryVOList = statisticService.summary(statisticQueryDTO);
         return Result.success(statisticQueryVOList);
     }
+    @ApiOperation("按类型汇总")
+    @PostMapping("/category")
+    public Result<List<StatisticVO>> summaryByType(@RequestBody StatisticQueryDTO statisticQueryDTO) {
+        log.info("按类型汇总:{}", statisticQueryDTO );
+        List<StatisticVO> statisticQueryVOList = statisticService.summaryByType(statisticQueryDTO);
+        return Result.success(statisticQueryVOList);
+    }
 
 }
 

@@ -23,4 +23,10 @@ public class StatisticServiceImpl implements StatisticService {
         log.info("账单汇总统计:{}", statisticQueryDTO);
         return accountMapper.summary(statisticQueryDTO);
     }
+
+    @Override
+    public List<StatisticVO> summaryByType(StatisticQueryDTO statisticQueryDTO) {
+        statisticQueryDTO.setFamilyId(BaseContext.getFamilyId());
+        return accountMapper.summaryByType(statisticQueryDTO);
+    }
 }
