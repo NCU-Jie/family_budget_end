@@ -3,6 +3,7 @@ package com.budget.controller;
 import com.budget.constant.JwtClaimsConstant;
 
 import com.budget.context.BaseContext;
+import com.budget.dto.EnrollDTO;
 import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
@@ -41,6 +42,15 @@ public class MemberController {
      * @param memberLoginDTO
      * @return
      */
+
+    @PostMapping("/enroll")
+    @ApiOperation("用户注册")
+    public Result<String> enroll(@RequestBody EnrollDTO enrollDTO) {
+        log.info("用户注册{}", enrollDTO);
+        memberService.enroll(enrollDTO);
+        return Result.success();
+    }
+
     @PostMapping("/login")
     @ApiOperation("用户登录")
     public Result<MemberLoginVO> login(@RequestBody MemberLoginDTO memberLoginDTO) {

@@ -1,5 +1,6 @@
 package com.budget.service;
 
+import com.budget.dto.EnrollDTO;
 import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
@@ -19,4 +20,6 @@ public interface MemberService {
     void updateMember(MemberDTO memberVO);
 
     Member getById(Long id);
+
+    void enroll(EnrollDTO enrollDTO);
 }

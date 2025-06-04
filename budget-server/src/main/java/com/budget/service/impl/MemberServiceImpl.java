@@ -4,6 +4,7 @@ import com.budget.constant.AdminConstant;
 import com.budget.constant.MessageConstant;
 
 import com.budget.context.BaseContext;
+import com.budget.dto.EnrollDTO;
 import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
@@ -113,5 +114,17 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberMapper.getById(id);
         member.setPassword(null);
         return member;
+    }
+
+    @Override
+    public void enroll(EnrollDTO enrollDTO) {
+        String name = enrollDTO.getName();
+        Member existingMember = memberMapper.getByName(name);
+        if (existingMember != null) {
+            throw new MemberAlreadyExistsException("用户 " + name + " 已存在");
+        }
+        Member member = new Member();
+        BeanUtils.copyProperties(enrollDTO, member);
+        memberMapper.insert(member);
     }
 }
