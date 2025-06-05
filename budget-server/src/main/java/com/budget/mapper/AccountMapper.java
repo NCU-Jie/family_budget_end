@@ -39,4 +39,6 @@ public interface AccountMapper {
     List<StatisticCategoryVO> summaryByType(StatisticQueryDTO statisticQueryDTO);
     @Delete("delete from account where member_id = #{id}")
     void deleteByMemberId(Long id);
+    @Delete("delete from account where category_id = #{id}")
+    void deleteByCategotyId(Long id);
 }

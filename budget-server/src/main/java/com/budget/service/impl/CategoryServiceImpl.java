@@ -5,6 +5,7 @@ import com.budget.dto.CategoryDTO;
 import com.budget.dto.CategoryPageQueryDTO;
 import com.budget.entity.Category;
 import com.budget.exception.CategoryAlreadyExistsException;
+import com.budget.mapper.AccountMapper;
 import com.budget.mapper.CategoryMapper;
 import com.budget.result.PageResult;
 import com.budget.service.CategoryService;
@@ -23,6 +24,9 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private AccountMapper accountMapper;
+
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
 
@@ -47,6 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
+        //删除该分类下的所有记录
+        accountMapper.deleteByCategotyId(id);
         categoryMapper.deleteById(id);
     }
 
