@@ -3,8 +3,8 @@ package com.budget.service.impl;
 import com.budget.context.BaseContext;
 import com.budget.dto.StatisticQueryDTO;
 import com.budget.mapper.AccountMapper;
-import com.budget.mapper.StatisticMapper;
 import com.budget.service.StatisticService;
+import com.budget.vo.StatisticCategoryVO;
 import com.budget.vo.StatisticVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public List<StatisticVO> summaryByType(StatisticQueryDTO statisticQueryDTO) {
+    public List<StatisticCategoryVO> summaryByType(StatisticQueryDTO statisticQueryDTO) {
         statisticQueryDTO.setFamilyId(BaseContext.getFamilyId());
         return accountMapper.summaryByType(statisticQueryDTO);
     }

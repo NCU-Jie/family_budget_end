@@ -6,6 +6,7 @@ import com.budget.dto.StatisticQueryDTO;
 import com.budget.entity.Account;
 import com.budget.enumeration.OperationType;
 import com.budget.vo.AccountVO;
+import com.budget.vo.StatisticCategoryVO;
 import com.budget.vo.StatisticVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
@@ -35,5 +36,7 @@ public interface AccountMapper {
     AccountVO getById(Long id);
     List<StatisticVO> summary(StatisticQueryDTO statisticQueryDTO);
 
-    List<StatisticVO> summaryByType(StatisticQueryDTO statisticQueryDTO);
+    List<StatisticCategoryVO> summaryByType(StatisticQueryDTO statisticQueryDTO);
+    @Delete("delete from account where member_id = #{id}")
+    void deleteByMemberId(Long id);
 }

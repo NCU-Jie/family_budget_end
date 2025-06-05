@@ -4,6 +4,7 @@ package com.budget.controller;
 import com.budget.dto.StatisticQueryDTO;
 import com.budget.result.Result;
 import com.budget.service.StatisticService;
+import com.budget.vo.StatisticCategoryVO;
 import com.budget.vo.StatisticVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +31,9 @@ public class StatisticController {
     }
     @ApiOperation("按类型汇总")
     @PostMapping("/category")
-    public Result<List<StatisticVO>> summaryByType(@RequestBody StatisticQueryDTO statisticQueryDTO) {
+    public Result<List<StatisticCategoryVO>> summaryByType(@RequestBody StatisticQueryDTO statisticQueryDTO) {
         log.info("按类型汇总:{}", statisticQueryDTO );
-        List<StatisticVO> statisticQueryVOList = statisticService.summaryByType(statisticQueryDTO);
+        List<StatisticCategoryVO> statisticQueryVOList = statisticService.summaryByType(statisticQueryDTO);
         return Result.success(statisticQueryVOList);
     }
 

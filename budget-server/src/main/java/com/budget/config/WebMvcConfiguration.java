@@ -40,7 +40,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/budget/**")
-                .excludePathPatterns("/budget/member/enroll")
+                .excludePathPatterns("/budget/member/register")
                 .excludePathPatterns("/budget/member/login");
 
     }
@@ -58,6 +58,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .description("家庭记账本项目接口文档")
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .pathMapping("/api")  // 关键：强制所有接口以 `/api` 开头
                 .groupName("接口")
                 .apiInfo(apiInfo)
                 .select()

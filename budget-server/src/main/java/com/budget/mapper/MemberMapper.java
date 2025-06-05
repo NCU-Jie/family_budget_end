@@ -29,4 +29,6 @@ public interface MemberMapper {
     void update(Member member);
 
     Member getByName(String name);
+    @Select("select max(family_id) from member")
+    Long findMaxFamilyId();
 }

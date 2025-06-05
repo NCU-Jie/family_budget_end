@@ -1,0 +1,8 @@
+budget:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: 134.175.243.253
+    port: 3306
+    database: homework
+    username: homework_user
+    password: 123456

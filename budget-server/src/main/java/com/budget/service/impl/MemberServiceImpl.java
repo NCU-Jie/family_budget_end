@@ -9,6 +9,7 @@ import com.budget.dto.MemberDTO;
 import com.budget.dto.MemberLoginDTO;
 import com.budget.entity.Member;
 import com.budget.exception.*;
+import com.budget.mapper.AccountMapper;
 import com.budget.mapper.MemberMapper;
 import com.budget.service.MemberService;
 import com.budget.vo.MemberVO;
@@ -23,6 +24,8 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private AccountMapper accountMapper;
     @Override
     public Member login(MemberLoginDTO memberLoginDTO) {
         String username = memberLoginDTO.getUsername();
@@ -91,6 +94,8 @@ public class MemberServiceImpl implements MemberService {
         if(id.equals(BaseContext.getCurrentId())){
             throw  new MemberException(MessageConstant.MEMBER_DELETE_NOT_ALLOWED);
         }
+        //删除用户会一并删除其相关账目
+        accountMapper.deleteByMemberId(id);
         memberMapper.deleteById(id);
     }
 
@@ -105,7 +110,10 @@ public class MemberServiceImpl implements MemberService {
         if(password !=null){
             String md5Password=DigestUtils.md5DigestAsHex(password.getBytes());
             member.setPassword(md5Password);
+        }else {
+
         }
+
         memberMapper.update(member);
     }
 
@@ -119,12 +127,20 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void enroll(EnrollDTO enrollDTO) {
         String name = enrollDTO.getName();
-        Member existingMember = memberMapper.getByName(name);
-        if (existingMember != null) {
+        Member existingMember1 = memberMapper.getByName(name);
+        Member existingMember2 = memberMapper.getByUsername(enrollDTO.getUsername());
+        if (existingMember1 != null) {
             throw new MemberAlreadyExistsException("用户 " + name + " 已存在");
+        }
+        if (existingMember2 != null) {
+            throw new MemberAlreadyExistsException("账号已存在");
         }
         Member member = new Member();
         BeanUtils.copyProperties(enrollDTO, member);
+        // 1. 查询当前最大familyId
+        Long maxId = memberMapper.findMaxFamilyId();
+        member.setFamilyId(maxId+1);
+        member.setPassword(DigestUtils.md5DigestAsHex(enrollDTO.getPassword().getBytes()));
         memberMapper.insert(member);
     }
 }

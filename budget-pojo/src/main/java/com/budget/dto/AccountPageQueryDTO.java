@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class AccountPageQueryDTO implements Serializable {
@@ -18,7 +19,7 @@ public class AccountPageQueryDTO implements Serializable {
 
     private Long typeId;
 
-    private String memberId;
+    private List<Long> memberIds;
 
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

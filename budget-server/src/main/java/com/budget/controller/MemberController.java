@@ -37,7 +37,7 @@ public class MemberController {
     @Autowired
     private JwtProperties jwtProperties;
 
-    @PostMapping("/enroll")
+    @PostMapping("/register")
     @ApiOperation("用户注册")
     public Result<String> enroll(@RequestBody EnrollDTO enrollDTO) {
         try {

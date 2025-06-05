@@ -25,18 +25,14 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryMapper categoryMapper;
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
-        String name = categoryDTO.getName();
-        int typeId = categoryDTO.getTypeId();
-        log.info("typeId:{}",  typeId);
 
-        CategoryVO existingCategoryVO = categoryMapper.getByNameAndTypeId(name, typeId);
-        if (existingCategoryVO != null) {
-            throw new CategoryAlreadyExistsException("分类 " + name + " 已存在");
-        }
-
-        Category category = new Category();
+        Category category=new Category();
         BeanUtils.copyProperties(categoryDTO, category);
         category.setFamilyId(BaseContext.getFamilyId());
+        CategoryVO existingCategoryVO = categoryMapper.select(category);
+        if (existingCategoryVO != null) {
+            throw new CategoryAlreadyExistsException("分类 " + category.getName() + " 已存在");
+        }
         categoryMapper.insert(category);
     }
 

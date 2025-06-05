@@ -30,4 +30,6 @@ public interface CategoryMapper {
     List<CategoryVO> findByName(CategoryDTO categoryDTO);
 
     List<CategoryVO> list(Long typeId, Long familyId);
+
+    CategoryVO select(Category category);
 }

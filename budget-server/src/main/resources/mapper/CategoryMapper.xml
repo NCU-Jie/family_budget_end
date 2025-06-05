@@ -42,7 +42,8 @@
     </select>
 
     <select id="getByNameAndTypeId" resultType="com.budget.vo.CategoryVO">
-        select * from category where name = #{name} and type_id = #{typeId}
+        select * from category where name = #{name} and type_id = #{typeId} and family_id = #{familyId}
+
     </select>
 
     <select id="findByName" resultType="com.budget.vo.CategoryVO">
@@ -62,6 +63,23 @@
     <select id="list" resultType="com.budget.vo.CategoryVO">
         select * from category
         <where>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="familyId != null">
+                and family_id = #{familyId}
+            </if>
+        </where>
+    </select>
+    <select id="select" resultType="com.budget.vo.CategoryVO">
+        select * from category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
             <if test="typeId != null">
                 and type_id = #{typeId}
             </if>

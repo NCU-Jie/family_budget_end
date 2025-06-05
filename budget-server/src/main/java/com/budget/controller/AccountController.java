@@ -33,9 +33,9 @@ public class AccountController {
         return Result.success();
     }
 
-    @GetMapping("/pageQuery")
+    @PostMapping("/pageQuery")
     @ApiOperation("记录分页查询")
-    public Result<PageResult> PageQuery(AccountPageQueryDTO accountPageQueryDTO){
+    public Result<PageResult> PageQuery(@RequestBody AccountPageQueryDTO accountPageQueryDTO){
         log.info("记录分页查询：{}", accountPageQueryDTO);
         PageResult pageResult = accountService.pageQuery(accountPageQueryDTO);
         return Result.success(pageResult);
